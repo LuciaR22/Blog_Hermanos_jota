@@ -15,17 +15,27 @@ Tareas:
 
        6. Fuera del bucle, muestra un alert() con el total de la compra. Por ejemplo: El total de su compra es: $[valor_total]. */
 
-let totalCompra = 0;
-let seguirComprando = true;
+function simulacionCarrito() {
+    let totalCompra = 0;
 
-while (seguirComprando) {
-    seguirComprando = confirm("¿Desea agregar un producto al carrito?");
-    if (seguirComprando) {
-        let valorProducto = parseFloat(prompt("Ingrese el valor del producto:"));
-        if (!isNaN(valorProducto) && valorProducto > 0) {
-            totalCompra += valorProducto;
-        }
+    while (confirm("¿Desea agregar un producto al carrito?")) {
+        totalCompra += agregarProducto();
     }
+
+    alert("El total de su compra es: $" + totalCompra);
 }
 
-alert("El total de su compra es: $" + totalCompra);
+function agregarProducto() {
+    while (true) {
+        const raw = prompt("Ingrese el valor del producto:");
+        if (raw === null) {
+            alert("La compra del producto ha sido cancelada.");
+            return 0;
+        }
+
+        const parsed = parseFloat(raw.trim().replace(",", "."));
+        if (Number.isFinite(parsed) && parsed > 0) return parsed;
+
+        alert("Por favor ingrese un número válido para continuar.");
+    }
+}
